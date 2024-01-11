@@ -149,3 +149,6 @@ dmypy.json
 .env_bakcup
 
 logs/
+*.txt
+*.docx
+
