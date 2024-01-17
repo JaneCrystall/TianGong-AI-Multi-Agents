@@ -1,13 +1,14 @@
-from functools import partial
 import json
 import os
+from functools import partial
 
 import httpx
 from airflow import DAG
 from airflow.models import Variable
-from airflow.operators.python import PythonOperator
 from airflow.operators.empty import EmptyOperator as DummyOperator
+from airflow.operators.python import PythonOperator
 from httpx import RequestError
+from tenacity import retry, stop_after_attempt, wait_fixed
 
 BASE_URL = "http://host.docker.internal:8000"
 TOKEN = Variable.get("FAST_API_TOKEN")
@@ -39,6 +40,7 @@ task_summary_prompt = """Based on the input, provide a summarized paragraph for 
     (Continue with additional task IDs and their summaries)"""
 
 
+@retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
 def post_request(
     post_url: str,
     formatter: callable,
@@ -110,11 +112,11 @@ def gov_6_merge(ti):
     results = [result_0, result_1, result_2, result_3, result_4]
     concatenated_result = "\n\n".join(results)
     # print(concatenated_result)
-    
-    markdown_file_name = 'summary_output.md'
+
+    markdown_file_name = "summary_output.md"
 
     # Save the model's response to a Markdown file
-    with open(markdown_file_name, 'w') as markdown_file:
+    with open(markdown_file_name, "w") as markdown_file:
         markdown_file.write(concatenated_result)
     return concatenated_result
 
@@ -209,7 +211,7 @@ default_args = {
 
 
 with DAG(
-    dag_id="ESG_compliance",
+    dag_id="ESG_compliance_old",
     default_args=default_args,
     description="ESG compliance Agent DAG",
     schedule_interval=None,
