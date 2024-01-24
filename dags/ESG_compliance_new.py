@@ -396,30 +396,161 @@ determine_path_formatter = partial(
     prompt="Based on the input, DETERMINE whether entity need provide quantitative information about the current or anticipated financial effects of a climate-related risk or opportunity. MUST respond with YES or NO ONLY.",
     task_ids=["Strategy_19_overview", "Strategy_20_task_summary"],
 )
-
-
-governance_openai_formatter = partial(
-    openai_formatter,
-    prompt="""Based on the following upstream outputs, provide a summary for each task related to the disclosure of how governance bodies or individuals are responsible for the oversight of climate-related risks and opportunities. You must follow the structure below:
-    # Governance
-    ## Governance 6 (a) - 1
-    A concise summary of the disclosure in the task.
-    ## Governance 6 (a) - 2
-    A concise summary of the disclosure in the task.
-    ...
-    (Continue with additional task IDs and their summaries)
-
-    Upstream outputs:
-    """,
-    task_ids=["Governance_6_a_1", "Governance_6_a_2"],
+strategy_21_task_summary_formatter = partial(
+    agent_formatter,
+    prompt=task_summary_prompt,
+    task_ids=["Strategy_21_a", "Strategy_21_b", "Strategy_21_c"],
+    session_id=session_id,
+)
+strategy_21_overview_formatter = partial(
+    agent_formatter,
+    prompt="Based on the input, SUMMARIZE into ONE paragraph.",
+    task_ids=["Strategy_21_a", "Strategy_21_b", "Strategy_21_c"],
+    session_id=session_id,
+)
+strategy_22_a_3_overview_formatter = partial(
+    agent_formatter,
+    prompt="Based on the input, SUMMARIZE whether the report discloses the entity’s assessment of its climate resilience as at the reporting date, which shall enable users of general purpose financial reports to understand the entity’s capacity to adjust or adapt its strategy and business model to climate change over the short, medium and long term, into ONE paragraph.",
+    task_ids=["Strategy_22_a_3_1", "Strategy_22_a_3_2", "Strategy_22_a_3_3"],
+    session_id=session_id,
+)
+strategy_22_a_task_summary_formatter = partial(
+    agent_formatter,
+    prompt=task_summary_prompt,
+    task_ids=["Strategy_22_a_1", "Strategy_22_a_2", "Strategy_22_a_3_overview"],
+    session_id=session_id,
+)
+strategy_22_a_overview_formatter = partial(
+    agent_formatter,
+    prompt="Based on the input, SUMMARIZE whether the report discloses the entity’s assessment of its climate resilience as at the reporting date, into ONE paragraph.",
+    task_ids=["Strategy_22_a_1", "Strategy_22_a_2", "Strategy_22_a_3_overview"],
+    session_id=session_id,
+)
+strategy_22_b_task_summary_formatter = partial(
+    agent_formatter,
+    prompt=task_summary_prompt,
+    task_ids=["Strategy_22_b_1", "Strategy_22_b_2", "Strategy_22_b_3"],
+    session_id=session_id,
+)
+strategy_22_b_overview_formatter = partial(
+    agent_formatter,
+    prompt="Based on the input, SUMMARIZE whether the report discloses information about how and when the climate-related scenario analysis was carried out, into ONE paragraph.",
+    task_ids=["Strategy_22_b_1", "Strategy_22_b_2", "Strategy_22_b_3"],
+    session_id=session_id,
+)
+strategy_22_overview_formatter = partial(
+    agent_formatter,
+    prompt="Based on the input, SUMMARIZE whether the report discloses information that enables users of general purpose financial reports to understand the resilience of the entity’s strategy and business model to climate-related changes, developments and uncertainties, taking into consideration the entity’s identified climate-related risks and opportunities; whether the report discloses whether the entity use climate-related scenario analysis to assess its climate resilience using an approach that is commensurate with  the entity’s circumstances; whether the report discloses a single amount or a range in providing quantitative information, into ONE paragraph.",
+    task_ids=["Strategy_22_a_overview", "Strategy_22_b_overview"],
+    session_id=session_id,
+)
+strategy_overview_formatter = partial(
+    agent_formatter,
+    prompt="Based on the input, SUMMARIZE whether the report achieve the objective of climate-related financial disclosures on strategy, which is to enable users of general purpose financial reports to understand an entity’s strategy for managing climate-related risks and opportunities, into ONE paragraph.",
+    task_ids=[
+        "Strategy_10_overview",
+        "Strategy_11_overview",
+        "Strategy_13_overview",
+        "Strategy_14_overview",
+        "Strategy_15_overview",
+        "Strategy_16_overview",
+        "Strategy_18_overview",
+        "Strategy_19_overview",
+        "Strategy_20_task_summary",
+        "Strategy_22_overview",
+    ],
+    session_id=session_id,
+)
+risk_25_a_task_summary_formatter = partial(
+    agent_formatter,
+    prompt=task_summary_prompt,
+    task_ids=[
+        "Risk_25_a_1",
+        "Risk_25_a_2",
+        "Risk_25_a_3",
+        "Risk_25_a_4",
+        "Risk_25_a_5",
+        "Risk_25_a_6",
+    ],
+    session_id=session_id,
+)
+risk_25_a_overview_formatter = partial(
+    agent_formatter,
+    prompt="Based on the input, SUMMARIZE whether the report discloses information about the processes and related policies the entity uses to identify, assess, prioritise and monitor climate-related risks, into ONE paragraph.",
+    task_ids=[
+        "Risk_25_a_1",
+        "Risk_25_a_2",
+        "Risk_25_a_3",
+        "Risk_25_a_4",
+        "Risk_25_a_5",
+        "Risk_25_a_6",
+    ],
+    session_id=session_id,
+)
+risk_25_task_summary_formatter = partial(
+    agent_formatter,
+    prompt=task_summary_prompt,
+    task_ids=["Risk_25_b", "Risk_25_c"],
+    session_id=session_id,
+)
+risk_25_overview_formatter = partial(
+    agent_formatter,
+    prompt="Based on the input, SUMMARIZE into ONE paragraph.",
+    task_ids=["Risk_25_a_overview", "Risk_25_b", "Risk_25_c"],
+    session_id=session_id,
+)
+metrics_29_a_task_summary_formatter = partial(
+    agent_formatter,
+    prompt=task_summary_prompt,
+    task_ids=[
+        "Metrics_29_a_1",
+        "Metrics_29_a_2",
+        "Metrics_29_a_3",
+        "Metrics_29_a_5",
+        "Metrics_29_a_6",
+    ],
+    session_id=session_id,
+)
+metrics_29_a_overview_formatter = partial(
+    agent_formatter,
+    prompt="Based on the input, SUMMARIZE into ONE paragraph.",
+    task_ids=[
+        "Metrics_29_a_1",
+        "Metrics_29_a_2",
+        "Metrics_29_a_3",
+        "Metrics_29_a_5",
+        "Metrics_29_a_6",
+    ],
+    session_id=session_id,
+)
+metrics_29_b_f_task_summary_formatter = partial(
+    agent_formatter,
+    prompt=task_summary_prompt,
+    task_ids=[
+        "Metrics_29_b",
+        "Metrics_29_c",
+        "Metrics_29_d",
+        "Metrics_29_e",
+        "Metrics_29_f_1",
+        "Metrics_29_f_2",
+        "Metrics_29_g_1",
+        "Metrics_29_g_2",
+    ],
+    session_id=session_id,
+)
+metrics_29_overview_formatter = partial(
+    agent_formatter,
+    prompt="Based on the input, SUMMARIZE into ONE paragraph.",
+    task_ids=[
+        "Metrics_29_a_overview",
+        "Metrics_29_b_f_task_summary",
+    ],
+    session_id=session_id,
 )
 
 
 agent = partial(post_request, post_url=agent_url, formatter=agent_formatter)
 # openai = partial(post_request, post_url=openai_url, formatter=openai_formatter)
-openai_governance = partial(
-    post_request, post_url=openai_url, formatter=governance_openai_formatter
-)
 govenance_a_task_summary_agent = partial(
     post_request, post_url=summary_url, formatter=gov_a_task_summary_formatter
 )
@@ -498,6 +629,58 @@ strategy_20_task_summary_agent = partial(
 determine_path_agent = partial(
     post_request, post_url=openai_url, formatter=determine_path_formatter
 )
+strategy_21_task_summary_agent = partial(
+    post_request, post_url=summary_url, formatter=strategy_21_task_summary_formatter
+)
+strategy_21_overview_agent = partial(
+    post_request, post_url=summary_url, formatter=strategy_21_overview_formatter
+)
+strategy_22_a_3_overview_agent = partial(
+    post_request, post_url=summary_url, formatter=strategy_22_a_3_overview_formatter
+)
+strategy_22_a_task_summary_agent = partial(
+    post_request, post_url=summary_url, formatter=strategy_22_a_task_summary_formatter
+)
+strategy_22_a_overview_agent = partial(
+    post_request, post_url=summary_url, formatter=strategy_22_a_overview_formatter
+)
+strategy_22_b_task_summary_agent = partial(
+    post_request, post_url=summary_url, formatter=strategy_22_b_task_summary_formatter
+)
+strategy_22_b_overview_agent = partial(
+    post_request, post_url=summary_url, formatter=strategy_22_b_overview_formatter
+)
+strategy_22_overview_agent = partial(
+    post_request, post_url=summary_url, formatter=strategy_22_overview_formatter
+)
+strategy_overview_agent = partial(
+    post_request, post_url=summary_url, formatter=strategy_overview_formatter
+)
+risk_25_a_task_summary_agent = partial(
+    post_request, post_url=summary_url, formatter=risk_25_a_task_summary_formatter
+)
+risk_25_a_overview_agent = partial(
+    post_request, post_url=summary_url, formatter=risk_25_a_overview_formatter
+)
+risk_25_task_summary_agent = partial(
+    post_request, post_url=summary_url, formatter=risk_25_task_summary_formatter
+)
+risk_25_overview_agent = partial(
+    post_request, post_url=summary_url, formatter=risk_25_overview_formatter
+)
+metrics_29_a_task_summary_agent = partial(
+    post_request, post_url=summary_url, formatter=metrics_29_a_task_summary_formatter
+)
+metrics_29_a_overview_agent = partial(
+    post_request, post_url=summary_url, formatter=metrics_29_a_overview_formatter
+)
+metrics_29_b_f_task_summary_agent = partial(
+    post_request, post_url=summary_url, formatter=metrics_29_b_f_task_summary_formatter
+)
+metrics_29_overview_agent = partial(
+    post_request, post_url=summary_url, formatter=metrics_29_overview_formatter
+)
+
 
 translate_agent = partial(
     post_request, post_url=openai_url, formatter=openai_translate_formatter
@@ -1067,10 +1250,542 @@ with DAG(
         },
     )
 
+    Strategy_21_task_summary = task_PyOpr(
+        task_id="Strategy_21_task_summary",
+        callable_func=strategy_21_task_summary_agent,
+    )
+
+    Strategy_21_overview = task_PyOpr(
+        task_id="Strategy_21_overview",
+        callable_func=strategy_21_overview_agent,
+    )
+
+    Strategy_22_a_1 = task_PyOpr(
+        task_id="Strategy_22_a_1",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose the entity’s assessment of its climate resilience as at the reporting date, which shall enable users of general purpose financial reports to understand the implications, if any, of the entity’s assessment for its strategy and business model, including how the entity would need to respond to the effects identified in the climate-related scenario analysis? "
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Strategy_22_a_2 = task_PyOpr(
+        task_id="Strategy_22_a_2",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose the entity’s assessment of its climate resilience as at the reporting date, which shall enable users of general purpose financial reports to understand the significant areas of uncertainty considered in the entity’s assessment of its climate resilience? "
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Strategy_22_a_3_1 = task_PyOpr(
+        task_id="Strategy_22_a_3_1",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose the availability of, and flexibility in, the entity’s existing financial resources to respond to the effects identified in the climate-related scenario analysis, including to address climate-related risks and to take advantage of climate-related opportunities?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Strategy_22_a_3_2 = task_PyOpr(
+        task_id="Strategy_22_a_3_2",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose the entity’s ability to redeploy, repurpose, upgrade or decommission existing assets?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Strategy_22_a_3_3 = task_PyOpr(
+        task_id="Strategy_22_a_3_3",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose the effect of the entity’s current and planned investments in climate-related mitigation, adaptation and opportunities for climate resilience?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Strategy_22_a_3_overview = task_PyOpr(
+        task_id="Strategy_22_a_3_overview",
+        callable_func=strategy_22_a_3_overview_agent,
+    )
+
+    Strategy_22_a_task_summary = task_PyOpr(
+        task_id="Strategy_22_a_task_summary",
+        callable_func=strategy_22_a_task_summary_agent,
+    )
+
+    Strategy_22_a_overview = task_PyOpr(
+        task_id="Strategy_22_a_overview",
+        callable_func=strategy_22_a_overview_agent,
+    )
+
+    Strategy_22_b_1 = task_PyOpr(
+        task_id="Strategy_22_b_1",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": """Does the report disclose how and when the climate-related scenario analysis was carried out, including information about the inputs the entity used? Including:
+                    (1)	which climate-related scenarios the entity used for the analysis and the sources of those scenarios;
+                    (2)	whether the analysis included a diverse range of climate-related scenarios;
+                    (3)	whether the climate-related scenarios used for the analysis are associated with climate-related transition risks or climate-related physical risks;
+                    (4)	whether the entity used, among its scenarios, a climate- related scenario aligned with the latest international agreement on climate change;
+                    (5)	why the entity decided that its chosen climate-related scenarios are relevant to assessing its resilience to climate-related changes, developments or uncertainties;
+                    (6)	the time horizons the entity used in the analysis; and
+                    (7)	what scope of operations the entity used in the analysis (for example, the operating locations and business units used in the analysis)
+                    """
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Strategy_22_b_2 = task_PyOpr(
+        task_id="Strategy_22_b_2",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": """Does the report disclose how and when the climate-related scenario analysis was carried out, including the key assumptions the entity made in the analysis, including assumptions about:
+                    (1)	climate-related policies in the jurisdictions in which the entity operates;
+                    (2)	macroeconomic trends;
+                    (3)	national- or regional-level variables (for example, local weather patterns, demographics, land  use, infrastructure and availability of natural resources);
+                    (4)	energy usage and mix; and
+                    (5)	developments in technology.
+                    """
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Strategy_22_b_3 = task_PyOpr(
+        task_id="Strategy_22_b_3",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose how and when the climate-related scenario analysis was carried out, including the reporting period in which the climate-related scenario analysis was carried out?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Strategy_22_b_task_summary = task_PyOpr(
+        task_id="Strategy_22_b_task_summary",
+        callable_func=strategy_22_b_task_summary_agent,
+    )
+
+    Strategy_22_b_overview = task_PyOpr(
+        task_id="Strategy_22_b_overview",
+        callable_func=strategy_22_b_overview_agent,
+    )
+
+    Strategy_22_overview = task_PyOpr(
+        task_id="Strategy_22_overview",
+        callable_func=strategy_22_overview_agent,
+    )
+
     Strategy_overview = task_PyOpr(
         task_id="Strategy_overview",
-        callable_func=strategy_13_overview_agent,
+        callable_func=strategy_overview_agent,
     )
+
+    Risk_25_a_1 = task_PyOpr(
+        task_id="Risk_25_a_1",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose information about the inputs and parameters the entity uses (for example, information about data sources and the scope of operations covered in the processes) to identify, assess, prioritise and monitor climate-related risks?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Risk_25_a_2 = task_PyOpr(
+        task_id="Risk_25_a_2",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose information about whether and how the entity uses climate-related scenario analysis to inform its identification of climate-related risks?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Risk_25_a_3 = task_PyOpr(
+        task_id="Risk_25_a_3",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose information about how the entity assesses the nature, likelihood and magnitude of the effects of climate-related risks (for example, whether the entity considers qualitative factors, quantitative thresholds or other criteria)?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Risk_25_a_4 = task_PyOpr(
+        task_id="Risk_25_a_4",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose information about whether and how the entity prioritises climate-related risks relative to other types of risk?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Risk_25_a_5 = task_PyOpr(
+        task_id="Risk_25_a_5",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose information about how the entity monitors climate-related risks?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Risk_25_a_6 = task_PyOpr(
+        task_id="Risk_25_a_6",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose information about whether and how the entity has changed the processes it uses compared with the previous reporting period?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Risk_25_a_task_summary = task_PyOpr(
+        task_id="Risk_25_a_task_summary",
+        callable_func=risk_25_a_task_summary_agent,
+    )
+
+    Risk_25_a_overview = task_PyOpr(
+        task_id="Risk_25_a_overview",
+        callable_func=risk_25_a_overview_agent,
+    )
+
+    Risk_25_b = task_PyOpr(
+        task_id="Risk_25_b",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose information about the processes the entity uses to identify, assess, prioritise and monitor climate-related opportunities, including information about  whether and how the entity uses climate-related scenario analysis to inform its identification of climate-related opportunities?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Risk_25_c = task_PyOpr(
+        task_id="Risk_25_c",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose information about the extent to which, and how, the processes for identifying, assessing, prioritising and monitoring climate-related risks and opportunities are integrated into and inform the entity’s overall risk management process?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Risk_25_task_summary = task_PyOpr(
+        task_id="Risk_25_task_summary",
+        callable_func=risk_25_task_summary_agent,
+    )
+
+    Risk_25_overview = task_PyOpr(
+        task_id="Risk_25_overview",
+        callable_func=risk_25_overview_agent,
+    )
+
+    Metrics_29_a_1 = task_PyOpr(
+        task_id="Metrics_29_a_1",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose its absolute gross greenhouse gas emissions generated during the reporting period, expressed as metric tonnes of CO2 equivalent, classified as Scope 1 greenhouse gas emissions,Scope 2 greenhouse gas emissions, and Scope 3 greenhouse gas emissions?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Metrics_29_a_2 = task_PyOpr(
+        task_id="Metrics_29_a_2",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report measure its greenhouse gas emissions in accordance with the Greenhouse Gas Protocol: A Corporate Accounting and Reporting Standard (2004) unless required by a jurisdictional authority or an exchange on which the entity is listed to use a different method for measuring its greenhouse gas emissions?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Metrics_29_a_3 = task_PyOpr(
+        task_id="Metrics_29_a_3",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": """Does the report disclose the approach it uses to measure its greenhouse gas emissions including:
+                    (1)	the measurement approach, inputs and assumptions the entity uses to measure its greenhouse gas emissions;
+                    (2)	the reason why the entity has chosen the measurement approach, inputs and assumptions it uses to measure its greenhouse gas emissions; and
+                    (3)	any changes the entity made to the measurement approach, inputs and assumptions during the reporting period and the reasons for those changes?
+                    """
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Metrics_29_a_5 = task_PyOpr(
+        task_id="Metrics_29_a_4",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose location-based Scope 2 greenhouse gas emissions, and provide information about any contractual instruments that is necessary to inform users’ understanding of the entity’s Scope 2 greenhouse gas emissions ?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Metrics_29_a_6 = task_PyOpr(
+        task_id="Metrics_29_a_6",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": """Does the report disclose the categories included within the entity’s measure of Scope 3 greenhouse gas emissions, in accordance with the Scope 3 categories described in the Greenhouse Gas Protocol Corporate Value Chain (Scope 3) Accounting and Reporting Standard (2011)?
+                    """
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Metrics_29_a_task_summary = task_PyOpr(
+        task_id="Metrics_29_a_task_summary",
+        callable_func=metrics_29_a_task_summary_agent,
+    )
+
+    Metrics_29_a_overview = task_PyOpr(
+        task_id="Metrics_29_a_overview",
+        callable_func=metrics_29_a_overview_agent,
+    )
+
+    Metrics_29_b = task_PyOpr(
+        task_id="Metrics_29_b",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose information relevant to the cross-industry metric categories of climate-related transition risks—the amount and percentage of assets or business activities vulnerable to climate-related transition risks?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Metrics_29_c = task_PyOpr(
+        task_id="Metrics_29_c",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose information relevant to the cross-industry metric categories of climate-related physical risks—the amount and percentage of assets or business activities vulnerable to climate-related physical risks?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Metrics_29_d = task_PyOpr(
+        task_id="Metrics_29_d",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose information relevant to the cross-industry metric categories of climate-related opportunities—the amount and percentage of assets or business activities aligned with climate-related opportunities?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Metrics_29_e = task_PyOpr(
+        task_id="Metrics_29_e",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose information relevant to the cross-industry metric categories of capital deployment—the amount of capital expenditure, financing or investment deployed towards climate-related risks and opportunities?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Metrics_29_f_1 = task_PyOpr(
+        task_id="Metrics_29_f_1",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose information about an explanation of whether and how the entity is applying a carbon price in decision-making (for example, investment decisions, transfer pricing and scenario analysis)?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Metrics_29_f_2 = task_PyOpr(
+        task_id="Metrics_29_f_2",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose the price for each metric tonne of greenhouse gas emissions the entity uses to assess the costs of its greenhouse gas emissions?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Metrics_29_g_1 = task_PyOpr(
+        task_id="Metrics_29_g_1",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose a description of whether and how climate-related considerations are factored into executive remuneration ?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Metrics_29_g_2 = task_PyOpr(
+        task_id="Metrics_29_g_2",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose the percentage of executive management remuneration recognised in the current period that is linked to climate- related considerations?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Metrics_29_b_f_task_summary = task_PyOpr(
+        task_id="Metrics_29_b_f_task_summary",
+        callable_func=metrics_29_b_f_task_summary_agent,
+    )
+
+    Metrics_29_overview = task_PyOpr(
+        task_id="Metrics_29_overview",
+        callable_func=metrics_29_overview_agent,
+    )
+
+    Metrics_33 = task_PyOpr(
+        task_id="Metrics_33",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": """Does the report disclose the quantitative and qualitative climate-related targets it has set to monitor progress towards achieving its strategic goals, and any targets it is required to meet by law or regulation, including any greenhouse gas emissions targets?
+                    For each target, does the entity disclose:
+                    (a)	the metric used to set the target;
+                    (b)	the objective of the target (for example, mitigation, adaptation or conformance with science-based initiatives);
+                    (c)	the part of the entity to which the target applies (for example, whether the target applies to the entity in its entirety or only a part of the entity, such as a specific business unit or specific geographical region);
+                    (d)	the period over which the target applies;
+                    (e)	the base period from which progress is measured;
+                    (f)	any milestones and interim targets;
+                    (g)	if the target is quantitative, whether it is an absolute target or an intensity target; and
+                    (h)	how the latest international agreement on climate change, including jurisdictional commitments that arise from that agreement, has informed the target.
+                    """
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Metrics_34 = task_PyOpr(
+        task_id="Metrics_34",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": """Does the report disclose information about its approach to setting and reviewing each target, and how it monitors progress against each target, including:
+                    (a)	whether the target and the methodology for setting the target has been validated by a third party;
+                    (b)	the entity’s processes for reviewing the target;
+                    (c)	the metrics used to monitor progress towards reaching the target; and
+                    (d)	any revisions to the target and an explanation for those revisions?
+                    """
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+    Metrics_35 = task_PyOpr(
+        task_id="Metrics_35",
+        callable_func=agent,
+        op_kwargs={
+            "data_to_send": {
+                "input": {
+                    "input": "Does the report disclose information about its performance against each climate-related target and an analysis of trends or changes in the entity’s performance?"
+                },
+                "config": {"configurable": {"session_id": session_id}},
+            }
+        },
+    )
+
+
 
     results_merge = PythonOperator(
         task_id="merge",
@@ -1148,7 +1863,31 @@ with DAG(
         >> determine_path
         >> branch_task
         >> [Strategy_21_a, Strategy_21_b, Strategy_21_c]
+        >> Strategy_21_task_summary
+        >> Strategy_21_overview
     )
+    [
+        Strategy_22_a_3_1,
+        Strategy_22_a_3_2,
+        Strategy_22_a_3_3,
+    ] >> Strategy_22_a_3_overview
+
+    (
+        [Strategy_22_a_1, Strategy_22_a_2, Strategy_22_a_3_overview]
+        >> Strategy_22_a_task_summary
+        >> Strategy_22_a_overview
+    )
+
+    (
+        [Strategy_22_b_1, Strategy_22_b_2, Strategy_22_b_3]
+        >> Strategy_22_b_task_summary
+        >> Strategy_22_b_overview
+    )
+
+    [
+        Strategy_22_a_overview,
+        Strategy_22_b_overview,
+    ] >> Strategy_22_overview
 
     [
         Strategy_10_overview,
@@ -1159,23 +1898,49 @@ with DAG(
         Strategy_16_overview,
         Strategy_18_overview,
         Strategy_19_overview,
+        Strategy_20_task_summary,
+        Strategy_22_overview,
     ] >> Strategy_overview
 
     (
-        [
-            Governance_overview,
-            Governance_6_a_overview,
-            Governance_6_a_task_summary,
-            Governance_6_b_overview,
-            Governance_6_b_task_summary,
-            Strategy_overview,
-            Strategy_10_overview,
-            Strategy_10_task_summary,
-            Strategy_11_overview,
-            Strategy_13_overview,
-            Strategy_13_task_summary,
-        ]
-        >> results_merge
-        >> translate
-        >> save_file_task
+        [Risk_25_a_1, Risk_25_a_2, Risk_25_a_3, Risk_25_a_4, Risk_25_a_5, Risk_25_a_6]
+        >> Risk_25_a_task_summary
+        >> Risk_25_a_overview
     )
+    [Risk_25_b, Risk_25_c] >> Risk_25_task_summary
+    [Risk_25_a_overview, Risk_25_task_summary] >> Risk_25_overview
+    (
+        [Metrics_29_a_1, Metrics_29_a_2, Metrics_29_a_3, Metrics_29_a_5, Metrics_29_a_6]
+        >> Metrics_29_a_task_summary
+        >> Metrics_29_a_overview
+    )
+    [
+        Metrics_29_b,
+        Metrics_29_c,
+        Metrics_29_d,
+        Metrics_29_e,
+        Metrics_29_f_1,
+        Metrics_29_f_2,
+        Metrics_29_g_1,
+        Metrics_29_g_2,
+    ] >> Metrics_29_b_f_task_summary
+    [Metrics_29_a_overview, Metrics_29_b_f_task_summary] >> Metrics_29_overview
+
+    # (
+    #     [
+    #         Governance_overview,
+    #         Governance_6_a_overview,
+    #         Governance_6_a_task_summary,
+    #         Governance_6_b_overview,
+    #         Governance_6_b_task_summary,
+    #         Strategy_overview,
+    #         Strategy_10_overview,
+    #         Strategy_10_task_summary,
+    #         Strategy_11_overview,
+    #         Strategy_13_overview,
+    #         Strategy_13_task_summary,
+    #     ]
+    #     >> results_merge
+    #     >> translate
+    #     >> save_file_task
+    # )
