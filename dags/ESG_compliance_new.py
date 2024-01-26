@@ -119,25 +119,24 @@ def determine_branch(ti):
         return []
 
 
-def openai_translate_formatter(ti, task_id=["merge"]):
-    data = ti.xcom_pull(task_ids=task_id)
-    content = "Translate the following text into native Chinese:" + "\n\n" + str(data)
-    formatted_data = {"input": content}
+def openai_translate_formatter(ti, task_ids:list = None):
+    results = []
+    for task_id in task_ids:
+        data = ti.xcom_pull(task_ids=task_id)
+        task_output = str(data)
+        results.append(task_output)
+    content = "\n\n".join(results)
+    prompt = "Translate the following text into native Chinese:" + "\n\n" + content
+    formatted_data = {"input": prompt}
     return formatted_data
 
 
-def merge(ti):
+def Governance_merge(ti):
     result_0 = ti.xcom_pull(task_ids="Governance_overview")["output"]["output"]
     result_1 = ti.xcom_pull(task_ids="Governance_6_a_overview")["output"]["output"]
     result_2 = ti.xcom_pull(task_ids="Governance_6_a_task_summary")["output"]["output"]
     result_3 = ti.xcom_pull(task_ids="Governance_6_b_overview")["output"]["output"]
     result_4 = ti.xcom_pull(task_ids="Governance_6_b_task_summary")["output"]["output"]
-    result_5 = ti.xcom_pull(task_ids="Strategy_overview")["output"]["output"]
-    result_6 = ti.xcom_pull(task_ids="Strategy_10_overview")["output"]["output"]
-    result_7 = ti.xcom_pull(task_ids="Strategy_10_task_summary")["output"]["output"]
-    result_8 = ti.xcom_pull(task_ids="Strategy_11_overview")["output"]["output"]
-    result_9 = ti.xcom_pull(task_ids="Strategy_13_overview")["output"]["output"]
-    result_10 = ti.xcom_pull(task_ids="Strategy_13_task_summary")["output"]["output"]
 
     concatenated_result = (
         " # Governance\n"
@@ -152,25 +151,149 @@ def merge(ti):
         + result_3
         + "\n\n"
         + result_4
-        + "\n\n"
-        + "# Strategy\n"
-        + result_5
+    )
+    return concatenated_result
+
+
+def Strategy_merge(ti):
+    result_0 = ti.xcom_pull(task_ids="Strategy_overview")["output"]["output"]
+    result_1 = ti.xcom_pull(task_ids="Strategy_10_overview")["output"]["output"]
+    result_2 = ti.xcom_pull(task_ids="Strategy_10_task_summary")["output"]["output"]
+    result_3 = ti.xcom_pull(task_ids="Strategy_11_overview")["output"]["output"]
+    result_4 = ti.xcom_pull(task_ids="Strategy_13_overview")["output"]["output"]
+    result_5 = ti.xcom_pull(task_ids="Strategy_13_task_summary")["output"]["output"]
+    result_6 = ti.xcom_pull(task_ids="Strategy_14_overview")["output"]["output"]
+    result_7 = ti.xcom_pull(task_ids="Strategy_14_a_overview")["output"]["output"]
+    result_8 = ti.xcom_pull(task_ids="Strategy_14_a_task_summary")["output"]["output"]
+    result_9 = ti.xcom_pull(task_ids="Strategy_14_b")["output"]["output"]
+    result_10 = ti.xcom_pull(task_ids="Strategy_14_c")["output"]["output"]
+
+    concatenated_result = (
+        "# Strategy\n"
+        + result_0
         + "\n\n"
         + "## Strategy 10\n"
-        + result_6
+        + result_1
         + "\n\n"
-        + result_7
+        + result_2
         + "\n\n"
         + "## Strategy 11\n"
-        + result_8
+        + result_3
         + "\n\n"
         + "## Strategy 13\n"
+        + result_4
+        + "\n\n"
+        + result_5
+        + "\n\n"
+        + "## Strategy 14\n"
+        + result_6
+        + "\n\n"
+        + "### Strategy 14 (a)\n"
+        + result_7
+        + "\n\n"
+        + result_8
+        + "\n\n"
+        + "### Strategy 14 (b)"
         + result_9
         + "\n\n"
+        + "### Strategy 14 (c)"
         + result_10
     )
 
+    return concatenated_result
+
+
+def Risk_merge(ti):
+    result_0 = ti.xcom_pull(task_ids="Risk_25_overview")["output"]["output"]
+    result_1 = ti.xcom_pull(task_ids="Risk_25_a_overview")["output"]["output"]
+    result_2 = ti.xcom_pull(task_ids="Risk_25_a_task_summary")["output"]["output"]
+    result_3 = ti.xcom_pull(task_ids="Risk_25_task_summary")["output"]["output"]
+
+    concatenated_result = (
+        "# Risk\n"
+        + result_0
+        + "\n\n"
+        + "## Risk 25 (a)\n"
+        + result_1
+        + "\n\n"
+        + result_2
+        + "\n\n"
+        + result_3
+    )
+    return concatenated_result
+
+
+def Metrics_merge(ti):
+    result_0 = ti.xcom_pull(task_ids="Metrics_overview")["output"]["output"]
+    result_1 = ti.xcom_pull(task_ids="Metrics_29_overview")["output"]["output"]
+    result_2 = ti.xcom_pull(task_ids="Metrics_29_a_overview")["output"]["output"]
+    result_3 = ti.xcom_pull(task_ids="Metrics_29_a_task_summary")["output"]["output"]
+    result_4 = ti.xcom_pull(task_ids="Metrics_29_b_f_task_summary")["output"]["output"]
+    result_5 = ti.xcom_pull(task_ids="Metrics_33")["output"]["output"]
+    result_6 = ti.xcom_pull(task_ids="Metrics_34")["output"]["output"]
+    result_7 = ti.xcom_pull(task_ids="Metrics_35")["output"]["output"]
+
+    concatenated_result = (
+        "# Metrics\n"
+        + result_0
+        + "\n\n"
+        + "## Metrics 29\n"
+        + result_1
+        + "\n\n"
+        + "### Metrics 29 (a)\n"
+        + result_2
+        + "\n\n"
+        + result_3
+        + "\n\n"
+        + result_4
+        + "\n\n"
+        + "## Metrics 33\n"
+        + result_5
+        + "\n\n"
+        + "## Metrics 34\n"
+        + result_6
+        + "\n\n"
+        + "## Metrics 35\n"
+        + result_7
+    )
+    return concatenated_result
+
+
+def merge_EN(ti):
+    result_0 = ti.xcom_pull(task_ids="Governance_output_merge")
+    result_1 = ti.xcom_pull(task_ids="Strategy_output_merge")
+    result_2 = ti.xcom_pull(task_ids="Risk_output_merge")
+    result_3 = ti.xcom_pull(task_ids="Metrics_output_merge")
+
+    concatenated_result = (
+        str(result_0)
+        + "\n\n"
+        + str(result_1)
+        + "\n\n"
+        + str(result_2)
+        + "\n\n"
+        + str(result_3)
+    )
+
     markdown_file_name = "ESG_compliance_report_EN.md"
+
+    # Save the model's response to a Markdown file
+    with open(markdown_file_name, "w") as markdown_file:
+        markdown_file.write(concatenated_result)
+    return concatenated_result
+
+
+def merge_CN(ti):
+    result_0 = ti.xcom_pull(task_ids="Governance_translate")["output"]["content"]
+    result_1 = ti.xcom_pull(task_ids="Strategy_translate")["output"]["content"]
+    result_2 = ti.xcom_pull(task_ids="Risk_translate")["output"]["content"]
+    result_3 = ti.xcom_pull(task_ids="Metrics_translate")["output"]["content"]
+
+    concatenated_result = (
+        result_0 + "\n\n" + result_1 + "\n\n" + result_2 + "\n\n" + result_3
+    )
+
+    markdown_file_name = "ESG_compliance_report_CN.md"
 
     # Save the model's response to a Markdown file
     with open(markdown_file_name, "w") as markdown_file:
@@ -547,7 +670,28 @@ metrics_29_overview_formatter = partial(
     ],
     session_id=session_id,
 )
-
+metrics_overview_formatter = partial(
+    agent_formatter,
+    prompt="Based on the input, SUMMARIZE into ONE paragraph.",
+    task_ids=["Metrics_29_overview", "Metrics_33", "Metrics_34", "Metrics_35"],
+    session_id=session_id,
+)
+governance_translate_formatter = partial(
+    openai_translate_formatter,
+    task_ids=["Governance_output_merge"],
+)
+strategy_translate_formatter = partial(
+    openai_translate_formatter,
+    task_ids=["Strategy_output_merge"],
+)
+risk_translate_formatter = partial(
+    openai_translate_formatter,
+    task_ids=["Risk_output_merge"],
+)
+metrics_translate_formatter = partial(
+    openai_translate_formatter,
+    task_ids=["Metrics_output_merge"],
+)
 
 agent = partial(post_request, post_url=agent_url, formatter=agent_formatter)
 # openai = partial(post_request, post_url=openai_url, formatter=openai_formatter)
@@ -680,11 +824,23 @@ metrics_29_b_f_task_summary_agent = partial(
 metrics_29_overview_agent = partial(
     post_request, post_url=summary_url, formatter=metrics_29_overview_formatter
 )
-
-
-translate_agent = partial(
-    post_request, post_url=openai_url, formatter=openai_translate_formatter
+metrics_overview_agent = partial(
+    post_request, post_url=summary_url, formatter=metrics_overview_formatter
 )
+
+governance_translate_agent = partial(
+    post_request, post_url=openai_url, formatter=governance_translate_formatter
+)
+strategy_translate_agent = partial(
+    post_request, post_url=openai_url, formatter=strategy_translate_formatter
+)
+risk_translate_agent = partial(
+    post_request, post_url=openai_url, formatter=risk_translate_formatter
+)
+metrics_translate_agent = partial(
+    post_request, post_url=openai_url, formatter=metrics_translate_formatter
+)
+
 
 default_args = {
     "owner": "airflow",
@@ -1581,7 +1737,7 @@ with DAG(
     )
 
     Metrics_29_a_5 = task_PyOpr(
-        task_id="Metrics_29_a_4",
+        task_id="Metrics_29_a_5",
         callable_func=agent,
         op_kwargs={
             "data_to_send": {
@@ -1785,22 +1941,61 @@ with DAG(
         },
     )
 
-
-
-    results_merge = PythonOperator(
-        task_id="merge",
-        python_callable=merge,
+    Metrics_overview = task_PyOpr(
+        task_id="Metrics_overview",
+        callable_func=metrics_overview_agent,
     )
 
-    translate = task_PyOpr(
-        task_id="translate",
-        callable_func=translate_agent,
+    Governance_output_merge = PythonOperator(
+        task_id="Governance_output_merge",
+        python_callable=Governance_merge,
     )
 
-    save_file_task = task_PyOpr(
-        task_id="save_file",
-        callable_func=save_file,
+    Strategy_output_merge = PythonOperator(
+        task_id="Strategy_output_merge",
+        python_callable=Strategy_merge,
     )
+
+    Risk_output_merge = PythonOperator(
+        task_id="Risk_output_merge",
+        python_callable=Risk_merge,
+    )
+
+    Metrics_output_merge = PythonOperator(
+        task_id="Metrics_output_merge",
+        python_callable=Metrics_merge,
+    )
+
+    Governance_translate = task_PyOpr(
+        task_id="Governance_translate",
+        callable_func=governance_translate_agent,
+    )
+
+    Strategy_translate = task_PyOpr(
+        task_id="Strategy_translate",
+        callable_func=strategy_translate_agent,
+    )
+
+    Risk_translate = task_PyOpr(
+        task_id="Risk_translate",
+        callable_func=risk_translate_agent,
+    )
+
+    Metrics_translate = task_PyOpr(
+        task_id="Metrics_translate",
+        callable_func=metrics_translate_agent,
+    )
+
+    Merge_EN = task_PyOpr(
+        task_id="Merge_EN",
+        callable_func=merge_EN,
+    )
+
+    Merge_CN = task_PyOpr(
+        task_id="Merge_CN",
+        callable_func=merge_CN,
+    )
+
 
     (
         [
@@ -1925,22 +2120,72 @@ with DAG(
         Metrics_29_g_2,
     ] >> Metrics_29_b_f_task_summary
     [Metrics_29_a_overview, Metrics_29_b_f_task_summary] >> Metrics_29_overview
+    [Metrics_29_overview, Metrics_33, Metrics_34, Metrics_35] >> Metrics_overview
 
-    # (
-    #     [
-    #         Governance_overview,
-    #         Governance_6_a_overview,
-    #         Governance_6_a_task_summary,
-    #         Governance_6_b_overview,
-    #         Governance_6_b_task_summary,
-    #         Strategy_overview,
-    #         Strategy_10_overview,
-    #         Strategy_10_task_summary,
-    #         Strategy_11_overview,
-    #         Strategy_13_overview,
-    #         Strategy_13_task_summary,
-    #     ]
-    #     >> results_merge
-    #     >> translate
-    #     >> save_file_task
-    # )
+    (
+        [
+            Governance_overview,
+            Governance_6_a_overview,
+            Governance_6_a_task_summary,
+            Governance_6_b_overview,
+            Governance_6_b_task_summary,
+        ]
+        >> Governance_output_merge
+        >> Governance_translate
+    )
+
+    (
+        [
+            Strategy_overview,
+            Strategy_10_overview,
+            Strategy_10_task_summary,
+            Strategy_11_overview,
+            Strategy_13_overview,
+            Strategy_13_task_summary,
+            Strategy_14_overview,
+            Strategy_14_a_overview,
+            Strategy_14_a_task_summary,
+            Strategy_14_b,
+            Strategy_14_c,
+        ]
+        >> Strategy_output_merge
+        >> Strategy_translate
+    )
+
+    (
+        [
+            Risk_25_a_overview,
+            Risk_25_a_task_summary,
+            Risk_25_task_summary,
+            Risk_25_overview,
+        ]
+        >> Risk_output_merge
+        >> Risk_translate
+    )
+    (
+        [
+            Metrics_overview,
+            Metrics_29_overview,
+            Metrics_29_a_overview,
+            Metrics_29_a_task_summary,
+            Metrics_29_b_f_task_summary,
+            Metrics_33,
+            Metrics_34,
+            Metrics_35,
+        ]
+        >> Metrics_output_merge
+        >> Metrics_translate
+    )
+
+    [
+        Governance_output_merge,
+        Strategy_output_merge,
+        Risk_output_merge,
+        Metrics_output_merge,
+    ] >> Merge_EN
+    [
+        Governance_translate,
+        Strategy_translate,
+        Risk_translate,
+        Metrics_translate,
+    ] >> Merge_CN
