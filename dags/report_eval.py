@@ -44,7 +44,7 @@ def post_request(
             print(f"An unexpected error occurred: {err}")
 
 
-def agent_formatte说r(ti, prompt: str = "", task_ids: list = None):
+def agent_formatter(ti, prompt: str = "", task_ids: list = None):
     if task_ids:
         results = []
         for task_id in task_ids:
@@ -63,7 +63,7 @@ def agent_formatte说r(ti, prompt: str = "", task_ids: list = None):
         pass
 
 
-def merge(ti, task_ids: list = None, file_name: str = "output.md"):
+def merge(ti, task_ids: list = None, file_name: str = "output1.md"):
     concatenated_result = ""
 
     for task_id in task_ids:
@@ -78,7 +78,13 @@ def merge(ti, task_ids: list = None, file_name: str = "output.md"):
 
 planning_summary_formatter = partial(
     agent_formatter,
-    prompt="根据下面INPUT，批判性总结项目与经济社会发展规划、区域规划、专项规划、国土空间规划等重大规划的衔接性。形成一段文字，简洁明了。",
+    prompt="""根据下面INPUT，批判性总结项目与经济社会发展规划、区域规划、专项规划、国土空间规划等重大规划的衔接性。针对每个规划，各分点总结一句话，要简洁明了，符合下面的markdown格式。
+    #与重大规划的衔接性
+    ##经济社会发展规划：<placeholder for 具体总结>
+    ##区域规划：<placeholder for 具体总结>
+    ##专项规划：<placeholder for 具体总结>
+    ##国土空间规划：<placeholder for 具体总结
+    """,
     task_ids=[
         "经济社会发展规划",
         "区域规划",
@@ -88,7 +94,15 @@ planning_summary_formatter = partial(
 )
 policy_summary_formatter = partial(
     agent_formatter,
-    prompt="根据下面INPUT，批判性总结项目与扩大内需、共同富裕、乡村振兴、科技创新、节能减排、碳达峰碳中和、国家安全和应急管理等重大政策目标的符合性。形成一段文字，简洁明了。",
+    prompt="""根据下面INPUT，批判性总结项目与扩大内需、共同富裕、乡村振兴、科技创新、节能减排、碳达峰碳中和、国家安全和应急管理等重大政策目标的符合性。针对每个规划，各分点总结一句话，要简洁明了，符合下面的markdown格式。
+    #与政策目标的符合性
+    ##扩大内需：<placeholder for 具体总结>
+    ##共同富裕：<placeholder for 具体总结>
+    ##乡村振兴：<placeholder for 具体总结>
+    ##科技创新：<placeholder for 具体总结>
+    ##节能减排：<placeholder for 具体总结>
+    ##碳达峰碳中和：<placeholder for 具体总结>
+    ##国家安全和应急管理：<placeholder for 具体总结>""",
     task_ids=[
         "扩大内需",
         "共同富裕",
