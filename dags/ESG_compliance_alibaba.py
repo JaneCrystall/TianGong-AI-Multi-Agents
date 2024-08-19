@@ -137,7 +137,7 @@ with DAG(
     default_args=default_args,
     description="ESG compliance Agent DAG",
     schedule_interval=None,
-    tags=["ESG_agent"],
+    tags=["ESG_test"],
     catchup=False,
 ) as dag:
     
@@ -161,7 +161,7 @@ with DAG(
     )
 
     A_2 = task_PyOpr(
-        task_id="A_1",
+        task_id="A_2",
         callable_func=agent,
         op_kwargs={
             "data_to_send": {
